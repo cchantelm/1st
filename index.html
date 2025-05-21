@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1st</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto+Slab&display=swap');
+
+    body {
+      margin: 0; padding: 0;
+      background: white;
+      font-family: 'Roboto Slab', serif;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+    }
+    #container {
+      position: relative;
+      width: 320px;
+      height: 400px;
+      cursor: pointer;
+    }
+
+    #envelope {
+      width: 320px;
+      height: 400px;
+      background: url('https://i.ibb.co/jM2Vcs7/envelope.png') center/contain no-repeat;
+      transition: transform 1s ease;
+      will-change: transform;
+    }
+
+    #wax {
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: url('https://i.ibb.co/fkRDJWr/wax.png') center/contain no-repeat;
+      pointer-events: none;
+    }
+
+    /* Letter content style */
+    #letter {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      padding: 30px 30px 30px 30px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      border-radius: 10px;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      user-select: text;
+    }
+
+    /* When letter is open */
+    #container.open #envelope {
+      transform: rotateX(90deg) translateY(-200px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #container.open #wax {
+      opacity: 0;
+    }
+
+    #container.open #letter {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Title on top */
+    #title {
+      position: fixed;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #444;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Scrollbar style for letter */
+    #letter::-webkit-scrollbar {
+      width: 8px;
+    }
+    #letter::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 4px;
+    }
+    #letter::-webkit-scrollbar-track {
+      background: #eee;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="title">1st</div>
+  <div id="container" aria-label="Open letter" role="button" tabindex="0">
+    <div id="envelope" aria-hidden="true"></div>
+    <div id="wax" aria-hidden="true"></div>
+    <div id="letter" tabindex="0">
+      <p>What a long journey it's been, mahal. There were multiple times na naisip natin if our relationship would even progress from simply "someone I met while playing val" pero I'm so glad it did. From the moment that you chose me and decided that this is something you want long term, I was fully committed to this relationship already.</p>
+      <p>The months leading up to this day wasn't easy for the both of us, but our love still prevailed. Nagalit at nasaktan natin ang isa't isa nang paulit ulit but we decided that this relationship is stronger than a small mishap. We kept on choosing each other day by day no matter how difficult it got or no matter how disconnected we felt. Distance was not a small issue either. If anything, I believe it was the root cause of all our misunderstandings. We miss each other and we want to be around the other's presence, that's all. Even then, we didn't let that stop us.</p>
+      <p>So I wanna say thank you, mahal ko. Thank you for showing me what love truly is. Thank you for your commitment and perseverance sa relationship natin. Thank you for healing wounds you did not cause, for handling my heart gently, for reminding me what my worth is, and for helping me realize that loving someone doesn't mean I would have to lose myself. Where everything was black and gray, you were the one who brought my life color. You were the one who brought back the light in my eyes, my love for life, and most importantly, you gave me something to look forward to: a future.</p>
+      <p>We've made it to one year and it's such a big milestone. There's more years to come and I hope na hindi ka mapagod na piliin tayo nang paulit ulit pa rin. I want you to know din na throughout all those years, I will always be here for you, and for us. Ako magiging kakampi mo when everyone shuts their doors on you. I'll be here when no one is, I'll be clapping when no one is. My love for you transcends beyond the skies and the sea and I hope you know that.</p>
+      <p>Cheers to a year and forevermore, my love, my baby, my best friend, and most importantly, my reassurance in a world full of uncertainties, my 101%.</p>
+      <p>I love you, CeeJ. I always will.<br><br>— Cleo</p>
+    </div>
+  </div>
+
+  <!-- Audio for click sound -->
+  <audio id="clickSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
+  <!-- Hidden YouTube embed for background music -->
+  <iframe id="bgMusic" width="0" height="0" src="https://www.youtube.com/embed/7ubmSnThYQg?autoplay=1&loop=1&playlist=7ubmSnThYQg&mute=1" allow="autoplay" allow="encrypted-media" style="display:none"></iframe>
+
+  <script>
+    const container = document.getElementById('container');
+    const clickSound = document.getElementById('clickSound');
+    const bgMusicIframe = document.getElementById('bgMusic');
+    let musicUnmuted = false;
+
+    container.addEventListener('click', () => {
+      if (!container.classList.contains('open')) {
+        clickSound.play();
+        container.classList.add('open');
+        // After a short delay, unmute the YouTube video by replacing src
+        if (!musicUnmuted) {
+          // Remove and re-add iframe with unmute
+          const src = "https://www.youtube.com/embed/7ubmSnThYQg?autoplay=1&loop=1&playlist=7ubmSnThYQg&mute=0&enablejsapi=1";
+          bgMusicIframe.src = src;
+          musicUnmuted = true;
+        }
+      }
+    });
+
+    // Allow opening via keyboard (Enter or Space)
+    container.addEventListener('keydown', (e) => {
+      if ((e.key === "Enter" || e.key === " ") && !container.classList.contains('open')) {
+        e.preventDefault();
+        container.click();
+      }
+    });
+  </script>
+</body>
+</html>
